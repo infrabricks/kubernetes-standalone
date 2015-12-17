@@ -1,8 +1,16 @@
-# Kubernetes single node deployment with docker-compose
+# Kubernetes single node deployment
 
-Clone from https://github.com/vyshane/docker-compose-kubernetes
+Idea from https://github.com/vyshane/docker-compose-kubernetes
 
-## Create a test kubernetes machine
+In the docker-compose.yml file, you see in the commands that it used a single binary hyperkube that allows you to start all the kubernetes components, the API server and the replication controller. One of the components it started is the kubelet which is normally used to monitor containers on one of the host in your cluster and make sure they stay up. Here by passing the `/etc/kubernetes/manifests` it helped us start the other components of kubernetes defined in that manifest.
+
+Note also that the containers where started with a host networking. So these containers have the network stack of the host, you will not see an interface on the docker bridge.
+
+With all those up, grab the kubectl binary, that is your kubernetes client that you will use to interact with the system.
+
+![](images/kubernetes-standalone.png)
+
+## Create a developer kubernetes machine
 
 ```
 $ docker-machine create -d virtualbox \
@@ -28,11 +36,6 @@ gcr.io/google_containers/hyperkube:v1.1.2 "/hyperkube proxy --master=http://127.
 gcr.io/google_containers/hyperkube:v1.1.2 "/hyperkube kubelet --api_servers=http://127.0.0.1:8080 --v=2 --address=0.0.0.0 --enable_server --hostname_override=127.0.0.1 --config=/etc/kubernetes/manifests"
 ```
 
-In the docker-compose.yml file, you see in the commands that it used a single binary hyperkube that allows you to start all the kubernetes components, the API server, the replication controller etc ... One of the components it started is the kubelet which is normally used to monitor containers on one of the host in your cluster and make sure they stay up. Here by passing the /etc/kubernetes/manifests it helped us start the other components of kubernetes defined in that manifest.
-
-Note also that the containers where started with a host networking. So these containers have the network stack of the host, you will not see an interface on the docker bridge.
-
-With all those up, grab the kubectl binary, that is your kubernetes client that you will use to interact with the system. The first thing you can do is list the nodes:
 
 ## Install the kubectl at your boot2docker images
 
