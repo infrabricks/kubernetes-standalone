@@ -1,4 +1,6 @@
-# Kubernetes single node with docker compose
+# Kubernetes single node deployment with docker-compose
+
+Clone from https://github.com/vyshane/docker-compose-kubernetes
 
 ## Create a test kubernetes machine
 
@@ -26,13 +28,13 @@ gcr.io/google_containers/hyperkube:v1.1.2 "/hyperkube proxy --master=http://127.
 gcr.io/google_containers/hyperkube:v1.1.2 "/hyperkube kubelet --api_servers=http://127.0.0.1:8080 --v=2 --address=0.0.0.0 --enable_server --hostname_override=127.0.0.1 --config=/etc/kubernetes/manifests"
 ```
 
-In the docker-compose.yml file, you see in the commands that it used a single binary hyperkube that allows you to start all the kubernetes components, the API server, the replication controller etc ... One of the components it started is the kubelet which is normally used to monitor containers on one of the host in your cluster and make sure they stay up. Here by passing the /etc/kubernetes/manifests it helped us start the other components of kubernetes defined in that manifest. Clever!
+In the docker-compose.yml file, you see in the commands that it used a single binary hyperkube that allows you to start all the kubernetes components, the API server, the replication controller etc ... One of the components it started is the kubelet which is normally used to monitor containers on one of the host in your cluster and make sure they stay up. Here by passing the /etc/kubernetes/manifests it helped us start the other components of kubernetes defined in that manifest.
 
 Note also that the containers where started with a host networking. So these containers have the network stack of the host, you will not see an interface on the docker bridge.
 
 With all those up, grab the kubectl binary, that is your kubernetes client that you will use to interact with the system. The first thing you can do is list the nodes:
 
-## install the kubectl at your boot2docker images
+## Install the kubectl at your boot2docker images
 
 ```
 $ docker-machine ssh kubernetes
@@ -51,7 +53,7 @@ $ ./bootlocal.sh
 $ exit
 ```
 
-## use the kubernetes machine locally
+## Use the kubernetes machine locally
 
 ```
 $ kubectl get nodes
@@ -103,7 +105,7 @@ $ kubectl expose rc nginx --port=80 --external-ip=192.168.99.100
 Now take your browser and open it at http://192.168.99.100 (if that's the IP of your host of course at docker-machine use : $(docker-machine ip kubernetes)
 ) and enjoy a replicated nginx managed by kubernetes deployed in 1 command.
 
-## remove old master after reboot
+## Remove old master after reboot
 
 Currently the started master server are not remove if machine has booted.
 Every machine restart create new master and pods..
@@ -114,7 +116,7 @@ Clean up with following command
 docker rm $(docker ps -f status=exited -q)
 ```
 
-## use your local mac kubectl client
+## Use your local mac kubectl client
 
 ```
 $ brew install kubernetes-cli
@@ -125,7 +127,7 @@ $ kubectl get nodes
 ```
 
 
-## bashcompletion
+## Use kubectl bash completion
 
 ```
 $ cd /usr/local/etc/bash_completion.d
@@ -133,7 +135,7 @@ $ curl -Ls https://raw.githubusercontent.com/kubernetes/kubernetes/master/contri
 $ chmod +x kubectl
 ```
 
-## start the kube-ui
+## Start the kube-ui
 
 ```
 $ eval $(docker-machine env kubernetes)
@@ -149,7 +151,7 @@ go to your browser and access the kube-ui with following link
 
 open http://localhost:8080/api/v1/proxy/namespaces/kube-system/services/kube-ui
 
-## alternate visualizer
+## Alternate kubernetes visualizer
 
 ```
 $ git clone https://github.com/saturnism/gcp-live-k8s-visualizer
@@ -161,9 +163,9 @@ $ kubectl create -f nginx.controller.json
 $ kubectl create -f nginx.service.json
 ```
 
-Add label `visualize=true` to your rc,service and pods descriptions!
+Add label `visualize=true` to your rc, service and pods descriptions!
 
-## DNS
+## Use DNS
 
 ```
 $ dig @192.168.99.100 nginx.default.svc.cluster.local
@@ -195,13 +197,14 @@ $ dig +short SRV @$(docker-machine ip kubernetes) nginx.default.svc.cluster.loca
 $ kubectl describe service nginx
 ```
 
-## Loadbalancer
+## Loadbalancer (ToDo)
 
 Kubernetes
 
 * NodePorts
 * Loadbalancer
   * https://github.com/kubernetes/kubernetes/blob/release-1.1/docs/design/horizontal-pod-autoscaler.md
+
 ### Ingress
 
 Edge Server
@@ -215,7 +218,8 @@ Edge Server
 ***
 
 Regards
-Peter
+
+Peter peter.rossbach@bee42.com
 
 ## Links
 
