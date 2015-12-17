@@ -233,3 +233,4 @@ Peter peter.rossbach@bee42.com
 * https://blog.docker.com/2015/11/deploy-manage-cluster-docker-swarm/
 * http://www.dasblinkenlichten.com/installing-cadvisor-and-heapster-on-bare-metal-kubernetes/
 * https://github.com/kubernetes-ui/graph
+* http://sebgoa.blogspot.de/2015/06/introducing-kmachine-docker-machine.html
