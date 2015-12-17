@@ -1,0 +1,25 @@
+{
+  "kind": "Service",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "nginx",
+    "labels": {
+      "name": "nginx",
+      "app": "sample",
+      "visualize": "true"
+    }
+  },
+  "spec": {
+    "ports": [
+      {
+        "name": "http",
+        "port": 9001,
+        "targetPort": 80,
+        "protocol": "TCP"
+      }
+    ],
+    "selector": {
+      "name": "nginx"
+    }
+  }
+}

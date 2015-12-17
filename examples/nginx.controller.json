@@ -1,0 +1,36 @@
+{
+  "kind":"ReplicationController",
+  "apiVersion":"v1",
+  "metadata":{
+    "name":"nginx",
+    "labels":{
+      "name":"nginx",
+      "visualize": "true"
+    }
+  },
+  "spec":{
+    "replicas": 2,
+    "selector":{
+      "name":"nginx"
+    },
+    "template":{
+      "metadata":{
+        "labels":{
+          "name":"nginx",
+          "app": "sample",
+          "version": "0.0.1",
+          "uses": "nginx",
+          "visualize": "true"
+        }
+      },
+      "spec":{
+        "containers":[
+          {
+            "name":"nginx",
+            "image":"nginx"
+          }
+        ]
+      }
+    }
+  }
+}
