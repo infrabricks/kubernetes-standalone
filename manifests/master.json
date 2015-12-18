@@ -22,7 +22,8 @@
               "/hyperkube",
               "apiserver",
               "--service-cluster-ip-range=172.17.0.1/24",
-              "--address=127.0.0.1",
+              "--bind-address=127.0.0.1",
+              "--secure-port=0",
               "--etcd-servers=http://127.0.0.1:4001",
               "--cluster-name=kubernetes",
               "--v=2"
