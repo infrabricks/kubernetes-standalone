@@ -90,23 +90,48 @@ $ kubectl get rc
 CONTROLLER   CONTAINER(S)   IMAGE(S)   SELECTOR    REPLICAS   AGE
 nginx        nginx          nginx      run=nginx   1          5m
 ```
-You can have some fun with the resize capability right away and see a new container pop-up.
+You can have some fun with the scale capability right away and see a new container pop-up.
 
 ```
-$ kubectl resize --replicas=2 rc nginx
-resized
-# >1.1
 $ kubectl scale --replicas=2 rc/nginx
 ```
 
 Now that is fine and dandy but there is no port exposed on the host, so you cannot access your application on the outside. That's where you want to define a service. Technically it is used to expose a service to all nodes in a cluster but of course you can bind that service proxy to a publicly routed interface:
 
 ```
-$ kubectl expose rc nginx --port=80 --external-ip=192.168.99.100
+$ kubectl expose rc nginx --port=80 --external-ip=$(docker-machine ip kubernetes)
 ```
 
-Now take your browser and open it at http://192.168.99.100 (if that's the IP of your host of course at docker-machine use : $(docker-machine ip kubernetes)
-) and enjoy a replicated nginx managed by kubernetes deployed in 1 command.
+Now take your browser and open it at `http://$(docker-machine ip kubernetes)` and enjoy a replicated nginx managed by kubernetes deployed in 1 command.
+
+The expose command create a ReplicationController and a Service.
+```
+$ kubectl describe rc nginx
+Name:		nginx
+Namespace:	default
+Image(s):	nginx
+Selector:	run=nginx
+Labels:		run=nginx
+Replicas:	2 current / 2 desired
+Pods Status:	2 Running / 0 Waiting / 0 Succeeded / 0 Failed
+No volumes.
+Events:
+  FirstSeen	LastSeen	Count	From				SubobjectPath	Reason			Message
+  ─────────	────────	─────	────				─────────────	──────			───────
+  3m		3m		1	{replication-controller }			SuccessfulCreate	Created pod: nginx-zopdj
+  3m		3m		1	{replication-controller }			SuccessfulCreate	Created pod: nginx-8818x
+$ kubectl describe service nginx
+Name:			nginx
+Namespace:		default
+Labels:			run=nginx
+Selector:		run=nginx
+Type:			ClusterIP
+IP:			172.17.0.130
+Port:			<unnamed>	80/TCP
+Endpoints:		172.17.0.3:80,172.17.0.4:80
+Session Affinity:	None
+No events.
+```
 
 ## Remove old master after reboot
 
