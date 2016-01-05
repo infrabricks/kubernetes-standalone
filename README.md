@@ -232,29 +232,36 @@ cd examples
 kubectl create -f busybox.yml
 kubectl exec -ti busybox /bin/sh
 ping nginx
-```
-
-```
-kubectl exec busybox -- nslookup kubernetes.default
-Server:    172.17.0.1
-Address 1: 172.17.0.1
-
-Name:      kubernetes.default
-Address 1: 172.17.0.1
+# not working...
 ```
 
 ```
 kubectl exec busybox -- nslookup cluster.local
-Server:    172.17.0.1
-Address 1: 172.17.0.1
+Server:    10.0.0.10
+Address 1: 10.0.0.10
 
 Name:      cluster.local
-Address 1: 172.17.0.48
-Address 2: 172.17.0.233
-Address 3: 172.17.0.10
-Address 4: 172.17.0.1
+Address 1: 127.0.0.1 localhost
+Address 2: 172.17.0.3
+Address 3: 172.17.0.2
+Address 4: 10.0.0.1
+Address 5: 172.17.0.6
+Address 6: 10.0.0.10
+Address 7: 10.0.0.124
+Address 8: 10.0.0.65
+Address 9: 172.17.0.4
+Address 10: 172.17.0.5 busybox
+
 ```
 
+```
+kubectl create -f examples/alpine.yml
+sleep 2
+kubectl exec -ti apline /bin/sh
+apk add --update curl
+curl nginx.default.svc.cluster.local:9001
+...
+```
 ## Loadbalancer (ToDo)
 
 Kubernetes
