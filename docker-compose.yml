@@ -31,4 +31,4 @@ skydns:
   net: host
   command: ['--machines=http://localhost:4001', '--addr=0.0.0.0:53', '--domain=cluster.local', '-ns-rotate=false']
   environment:
-    - SKYDNS_NAMESERVERS="8.8.8.8:53,8.8.4.4:53"
+    - SKYDNS_NAMESERVERS=8.8.8.8:53,8.8.4.4:53
