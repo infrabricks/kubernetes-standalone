@@ -225,6 +225,36 @@ $ dig +short SRV @$(docker-machine ip kubernetes) nginx.default.svc.cluster.loca
 $ kubectl describe service nginx
 ```
 
+## Access other services
+
+```
+cd examples
+kubectl create -f busybox.yml
+kubectl exec -ti busybox /bin/sh
+ping nginx
+```
+
+```
+kubectl exec busybox -- nslookup kubernetes.default
+Server:    172.17.0.1
+Address 1: 172.17.0.1
+
+Name:      kubernetes.default
+Address 1: 172.17.0.1
+```
+
+```
+kubectl exec busybox -- nslookup cluster.local
+Server:    172.17.0.1
+Address 1: 172.17.0.1
+
+Name:      cluster.local
+Address 1: 172.17.0.48
+Address 2: 172.17.0.233
+Address 3: 172.17.0.10
+Address 4: 172.17.0.1
+```
+
 ## Loadbalancer (ToDo)
 
 Kubernetes
@@ -252,6 +282,7 @@ Peter peter.rossbach@bee42.com
 ## Links
 
 * http://kubernetes.io
+* https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/dns
 * https://github.com/kubernetes/kubernetes/blob/master/contrib/completions/bash/kubectl
 * http://sebgoa.blogspot.de/2015/04/1-command-to-kubernetes-with-docker.html
 * https://github.com/vyshane/docker-compose-kubernetes
