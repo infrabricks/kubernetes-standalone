@@ -45,8 +45,8 @@ $ cd /var/lib/boot2docker
 $ sudo /bin/sh
 $ cat >bootlocal.sh <<EOF
 #!/bin/sh
-if [ -f "/var/lib/boot2docker/kubectl" ] ; then
-  wget https://storage.googleapis.com/kubernetes-release/release/v1.1.2/bin/linux/amd64/kubectl
+if [ ! -f "/var/lib/boot2docker/kubectl" ] ; then
+  wget https://storage.googleapis.com/kubernetes-release/release/v1.1.3/bin/linux/amd64/kubectl
   chmod +x /var/lib/boot2docker/kubectl
 fi
 cp /var/lib/boot2docker/kubectl /usr/local/bin
