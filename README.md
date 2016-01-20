@@ -262,6 +262,21 @@ apk add --update curl
 curl nginx.default.svc.cluster.local:9001
 ...
 ```
+
+## info from kubectl
+
+```
+IP=$(docker-machine ip kubernetes)
+curl ${IP}:10255/pods | jq "." | more
+curl ${IP}:10255/metrics | more
+# can directly use with prometheus monitoring system
+curl ${IP}:10255/healtz
+```
+
+## cadvisor from Kubectl
+
+open cadvisor with browser `$IP:4194`
+
 ## Loadbalancer (ToDo)
 
 Kubernetes
