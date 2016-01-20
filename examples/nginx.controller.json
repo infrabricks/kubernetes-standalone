@@ -27,7 +27,15 @@
         "containers":[
           {
             "name":"nginx",
-            "image":"nginx"
+            "image":"nginx",
+            "livenessProbe":
+              { "httpGet": {
+                  "path": "/",
+                  "port": 80
+                },
+                "initialDelaySeconds": 15,
+                "timeoutSeconds": 1
+              }
           }
         ]
       }
