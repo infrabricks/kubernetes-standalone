@@ -14,7 +14,7 @@ With all those up, grab the kubectl binary, that is your kubernetes client that 
 
 ```
 $ docker-machine create -d virtualbox \
-  --virtualbox-memory "2048" \
+  --virtualbox-memory "3072" \
   --virtualbox-cpu-count "2" kubernetes
 $ eval $(docker-machine env kubernetes)
 $ export KUBERNETES_MASTER=http://127.0.0.1:8080
@@ -27,13 +27,13 @@ Quickly there after, you will see a bunch of containers pop-up:
 ```
 $ docker ps --no-trunc --format "{{.Image}} {{.Command}}"
 gcr.io/google_containers/pause:0.8.0 "/pause"
-gcr.io/google_containers/hyperkube:v1.1.2 "/hyperkube controller-manager --master=127.0.0.1:8080 --v=2"
-gcr.io/google_containers/hyperkube:v1.1.2 "/hyperkube scheduler --master=127.0.0.1:8080 --v=2"
-gcr.io/google_containers/hyperkube:v1.1.2 "/hyperkube apiserver --service-cluster-ip-range=10.0.0.1/24 --address=127.0.0.1 --etcd-servers=http://127.0.0.1:4001 --cluster-name=kubernetes --v=2"
+gcr.io/google_containers/hyperkube:v1.1.3 "/hyperkube controller-manager --master=127.0.0.1:8080 --v=2"
+gcr.io/google_containers/hyperkube:v1.1.3 "/hyperkube scheduler --master=127.0.0.1:8080 --v=2"
+gcr.io/google_containers/hyperkube:v1.1.3 "/hyperkube apiserver --service-cluster-ip-range=10.0.0.1/24 --address=127.0.0.1 --etcd-servers=http://127.0.0.1:4001 --cluster-name=kubernetes --v=2"
 gcr.io/google_containers/pause:0.8.0 "/pause"
 gcr.io/google_containers/etcd:2.0.13 "/usr/local/bin/etcd --addr=127.0.0.1:4001 --bind-addr=0.0.0.0:4001 --data-dir=/var/etcd/data"
-gcr.io/google_containers/hyperkube:v1.1.2 "/hyperkube proxy --master=http://127.0.0.1:8080 --v=2"
-gcr.io/google_containers/hyperkube:v1.1.2 "/hyperkube kubelet --api_servers=http://127.0.0.1:8080 --v=2 --address=0.0.0.0 --enable_server --hostname_override=127.0.0.1 --config=/etc/kubernetes/manifests"
+gcr.io/google_containers/hyperkube:v1.1.3 "/hyperkube proxy --master=http://127.0.0.1:8080 --v=2"
+gcr.io/google_containers/hyperkube:v1.1.3 "/hyperkube kubelet --api_servers=http://127.0.0.1:8080 --v=2 --address=0.0.0.0 --enable_server --hostname_override=127.0.0.1 --config=/etc/kubernetes/manifests"
 ```
 
 
