@@ -132,6 +132,23 @@ Endpoints:		172.17.0.3:80,172.17.0.4:80
 Session Affinity:	None
 No events.
 ```
+## create a job
+
+```
+$ cd examples
+$ kubectl create -f pi-job.xml
+$ kubectl get jobs
+JOB       CONTAINER(S)   IMAGE(S)   SELECTOR      SUCCESSFUL
+pi        pi             perl       app in (pi)   0
+$ kubectl get jobs
+JOB       CONTAINER(S)   IMAGE(S)   SELECTOR      SUCCESSFUL
+pi        pi             perl       app in (pi)   1
+$ pods=$(kubectl get pods --selector=app=pi --output=jsonpath={.items..metadata.name})
+$ kubectl logs $pods
+3.141592653589793238462643383279502884197169...
+```
+
+* https://github.com/kubernetes/kubernetes/blob/release-1.1/docs/user-guide/jobs.md
 
 ## Remove old master after reboot
 
