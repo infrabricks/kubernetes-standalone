@@ -23,5 +23,6 @@ if [ $(command -v docker-machine) ] &&  [ ! -z "$(docker-machine active)" ]; the
 fi
 
 ./kube-wait.sh
+./kube-namespace.sh
 ./dns.sh
 ./kube-ui.sh
